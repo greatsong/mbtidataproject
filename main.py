@@ -21,18 +21,18 @@ else:
 
 # 국가 선택
 countries = df["Country"].tolist()
-selected_country = st.selectbox("국가를 선택하세요", countries)
+selected_Country = st.selectbox("국가를 선택하세요", countries)
 
 # 해당 국가의 MBTI 비율 상위 10개 추출
-def get_top10_mbti(df, country):
-    row = df[df["Country"] == country].iloc[0]
+def get_top10_mbti(df, Country):
+    row = df[df["Country"] == Country].iloc[0]
     mbti_scores = row.drop("Country").sort_values(ascending=False)[:10]
     return pd.DataFrame({
         "MBTI": mbti_scores.index,
         "비율": mbti_scores.values
     })
 
-top10_df = get_top10_mbti(df, selected_country)
+top10_df = get_top10_mbti(df, selected_Country)
 
 # Altair 그래프
 chart = alt.Chart(top10_df).mark_bar().encode(
@@ -43,7 +43,7 @@ chart = alt.Chart(top10_df).mark_bar().encode(
 ).properties(
     width=600,
     height=400,
-    title=f"{selected_country}의 MBTI 유형 Top 10"
+    title=f"{selected_Country}의 MBTI 유형 Top 10"
 )
 
 st.altair_chart(chart, use_container_width=True)
